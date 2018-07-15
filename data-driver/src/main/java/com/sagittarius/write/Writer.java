@@ -5,6 +5,7 @@ import com.sagittarius.bean.common.TimePartition;
 import com.sagittarius.exceptions.*;
 
 import java.nio.ByteBuffer;
+import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +25,23 @@ public interface Writer {
      * @param tags a collection of tag_name:tag_value pairs
      */
     void registerHostTags(String host, Map<String, String> tags) throws NoHostAvailableException, TimeoutException, QueryExecutionException;
+
+    /**
+     * manually update the latest time_slice.
+     * @param host the host name
+     * @param metric the metric id
+     * @param latestTime time string format yyyy-mm-dd hh:mm:ss
+     */
+    void updateLatestTimeSlice(String host, String metric, String latestTime) throws ParseException;
+
+    /**
+     * manually update the latest time_slice.
+     * @param host  the host name
+     * @param metric    the metric id
+     * @param latestTime long type timestamp
+     */
+    void updateLatestTimeSlice(String host, String metric, long latestTime);
+
 
     /**
      * insert a metric data point info whose metric value type is INT.
